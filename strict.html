@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Строгий і нестрогий режими</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/strict-on.js" defer></script>
+  <script src="js/strict-off.js" defer></script>
+</head>
+<body class="page">
+  <header class="page__header">
+    <h1 class="page__title">Строгий і нестрогий режими</h1>
+    <nav class="nav" aria-label="Розділи">
+      <a class="nav__link" href="index.html">Журнал</a>
+      <a class="nav__link" href="tasks.html">Задачі</a>
+      <a class="nav__link" href="strict.html" aria-current="page">Строгий режим</a>
+    </nav>
+  </header>
+  <main class="page__main">
+    <div class="columns">
+      <section class="card">
+        <h2 class="card__title">Зі "use strict" (strict-on.js)</h2>
+        <pre class="output" id="out-on"></pre>
+      </section>
+      <section class="card">
+        <h2 class="card__title">Без директиви (strict-off.js)</h2>
+        <pre class="output" id="out-off"></pre>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2 class="card__title">Пояснення</h2>
+      <p><strong>Чому помилку розбору не перехопити try…catch у тому самому сценарії.</strong>
+        Браузер спочатку розбирає файл цілком. Якщо в ньому є заборонена конструкція
+        (<code>with</code>, літерал <code>010</code>, однакові імена параметрів у строгому режимі),
+        <code>SyntaxError</code> виникає ще до виконання першого рядка: сценарій не стартує, отже, і
+        <code>try…catch</code> усередині нього теж. Через <code>new Function(…)</code> рядок
+        розбирається під час виконання, коли <code>try…catch</code> уже діє.</p>
+      <p><strong>Чому в модулях ECMAScript директива не потрібна.</strong>
+        За специфікацією код модулів (і тіла класів) завжди виконується в строгому режимі.</p>
+    </section>
+  </main>
+</body>
+</html>
