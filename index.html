@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Журнал оцінок</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- класичні сценарії з defer: порядок важливий, main.js – останнім -->
+  <script src="js/storage.js" defer></script>
+  <script src="js/render.js" defer></script>
+  <script src="js/events.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="page">
+  <header class="page__header">
+    <h1 class="page__title">Журнал оцінок</h1>
+  </header>
+
+  <main class="page__main">
+    <section class="card" aria-labelledby="form-title">
+      <h2 class="card__title" id="form-title">Новий результат</h2>
+      <form class="form" id="add-form" name="record" novalidate>
+        <div class="field">
+          <label class="field__label" for="student">Студент (прізвище, ім’я)</label>
+          <input class="field__input" id="student" name="student" type="text" required
+                 minlength="2" maxlength="60" autocomplete="off"
+                 pattern="[A-Za-zА-Яа-яІіЇїЄєҐґ'’ \-]+" aria-describedby="error-student">
+          <p class="field__error" id="error-student" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="discipline">Дисципліна</label>
+          <input class="field__input" id="discipline" name="discipline" type="text" required
+                 minlength="2" maxlength="60" list="disciplines" autocomplete="off"
+                 aria-describedby="error-discipline">
+          <datalist id="disciplines"></datalist>
+          <p class="field__error" id="error-discipline" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="grade">Оцінка (0–100)</label>
+          <input class="field__input" id="grade" name="grade" type="number" required
+                 min="0" max="100" step="1" inputmode="numeric" aria-describedby="error-grade">
+          <p class="field__error" id="error-grade" aria-live="polite"></p>
+        </div>
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Додати</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="list-title">
+      <h2 class="card__title" id="list-title">Записи</h2>
+
+      <div class="toolbar" id="toolbar">
+        <div class="field">
+          <label class="field__label" for="search">Пошук за прізвищем</label>
+          <input class="field__input" id="search" type="search" autocomplete="off">
+        </div>
+        <div class="field">
+          <label class="field__label" for="filter-discipline">Дисципліна</label>
+          <select class="field__input" id="filter-discipline" data-filter="discipline">
+            <option value="all">Усі дисципліни</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="filter-status">Відмітка</label>
+          <select class="field__input" id="filter-status" data-filter="status">
+            <option value="all">Усі</option>
+            <option value="checked">Відмічені</option>
+            <option value="unchecked">Не відмічені</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="sort">Порядок</label>
+          <select class="field__input" id="sort" data-filter="sort">
+            <option value="surname">За прізвищем А–Я</option>
+            <option value="grade-desc">За оцінкою ↓</option>
+            <option value="grade-asc">За оцінкою ↑</option>
+          </select>
+        </div>
+      </div>
+
+      <dl class="summary">
+        <div class="summary__item"><dt class="summary__label">Усього записів</dt><dd class="summary__value" id="stat-total">0</dd></div>
+        <div class="summary__item"><dt class="summary__label">Показано</dt><dd class="summary__value" id="stat-shown">0</dd></div>
+        <div class="summary__item"><dt class="summary__label">Відмічено</dt><dd class="summary__value" id="stat-checked">0</dd></div>
+        <div class="summary__item"><dt class="summary__label">Середній бал (показаних)</dt><dd class="summary__value" id="stat-average">—</dd></div>
+      </dl>
+
+      <ul class="records" id="list"></ul>
+      <p class="empty" id="empty" hidden></p>
+
+      <button class="btn btn--danger card__action" id="clear" type="button">Очистити сховище</button>
+    </section>
+  </main>
+</body>
+</html>
